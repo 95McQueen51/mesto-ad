@@ -6,10 +6,10 @@ const showInputError = (formElement, inputElement, errorMessage, settings) => {
 };
 
 const hideInputError = (formElement, inputElement, settings) => {
-  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+  const errorContainer = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.toggle(settings.inputErrorClass, false);
-  errorElement.textContent = '';
-  errorElement.classList.remove(settings.errorClass);
+  errorContainer.textContent = '';
+  errorContainer.classList.remove(settings.errorClass);
 };
 
 const checkInputValidity = (formElement, inputElement, settings) => {
