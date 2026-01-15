@@ -81,19 +81,15 @@ const createInfoString = (term, definition) => {
   return element;
 };
 
-const createUserElement = (userData, cardCount, likeCount) => {
+const createUserElement = (userData, cardCount) => {
   const template = document.getElementById("popup-info-user-preview-template");
   const element = template.content.cloneNode(true);
   
-  const userElement = element.querySelector(".popup-info__item_type_user");
-  userElement.querySelector(".popup-info__avatar").src = userData.avatar;
-  userElement.querySelector(".popup-info__avatar").alt = userData.name;
-  userElement.querySelector(".popup-info__name").textContent = userData.name;
-  userElement.querySelector(".popup-info__description").textContent = userData.about;
+  const userNameElement = element.querySelector(".popup-info__user-name");
+  const cardCountElement = element.querySelector(".popup-info__user-cards-count");
   
-  const counts = userElement.querySelectorAll(".popup-info__count");
-  counts[0].textContent = cardCount;
-  counts[1].textContent = likeCount;
+  userNameElement.textContent = userData.name;
+  cardCountElement.textContent = ` [${cardCount}]`;
   
   return element;
 };
@@ -102,21 +98,20 @@ const handleLogoClick = function() {
   usersStatsModalInfoList.innerHTML = '';
   usersStatsModalUsersList.innerHTML = '';
   
+  usersStatsModalInfoList.append(createInfoString("Статус:", "Загрузка данных..."));
+  openModalWindow(usersStatsModalWindow);
+  
   getCardList().then(function(cards) {
-    if(cards.length === 0) {
+    usersStatsModalInfoList.innerHTML = '';
+    
+    if(!cards || cards.length === 0) {
       usersStatsModalInfoList.append(createInfoString("Информация:", "Карточки не найдены"));
-      openModalWindow(usersStatsModalWindow);
       return;
     }
     
     let totalCards = cards.length;
-    let totalLikes = 0;
-    for(let i = 0; i < cards.length; i++) {
-      totalLikes = totalLikes + cards[i].likes.length;
-    }
     
     usersStatsModalInfoList.append(createInfoString("Всего карточек:", totalCards + ''));
-    usersStatsModalInfoList.append(createInfoString("Всего лайков:", totalLikes + ''));
     
     let cardsCopy = cards.slice();
     cardsCopy.sort(function(a, b) {
@@ -139,27 +134,38 @@ const handleLogoClick = function() {
       if(!stats[ownerId]) {
         stats[ownerId] = {
           user: card.owner,
-          cardCount: 0,
-          likeCount: 0
+          cardCount: 0
         };
       }
       stats[ownerId].cardCount++;
-      stats[ownerId].likeCount = stats[ownerId].likeCount + card.likes.length;
     }
     
-    let userStatsArray = Object.values(stats);
-    for(let k = 0; k < userStatsArray.length; k++) {
-      let stat = userStatsArray[k];
+    let userIds = Object.keys(stats);
+    usersStatsModalInfoList.append(createInfoString("Всего пользователей:", userIds.length + ''));
+    
+    let cardCounts = [];
+    for(let userId in stats) {
+      cardCounts.push(stats[userId].cardCount);
+    }
+    let maxCards = Math.max(...cardCounts);
+    usersStatsModalInfoList.append(createInfoString("Максимум карточек от одного:", maxCards + ''));
+    
+    let usersTitle = document.createElement('h4');
+    usersTitle.textContent = 'Все пользователи:';
+    usersTitle.className = 'popup-info__users-title';
+    usersStatsModalUsersList.parentNode.insertBefore(usersTitle, usersStatsModalUsersList);
+    
+    for(let userId in stats) {
+      let stat = stats[userId];
       usersStatsModalUsersList.append(
-        createUserElement(stat.user, stat.cardCount, stat.likeCount)
+        createUserElement(stat.user, stat.cardCount)
       );
     }
     
-    openModalWindow(usersStatsModalWindow);
   }).catch(function(err) {
     console.log(err);
+    usersStatsModalInfoList.innerHTML = '';
     usersStatsModalInfoList.append(createInfoString("Ошибка:", "Не удалось загрузить статистику"));
-    openModalWindow(usersStatsModalWindow);
   });
 };
 
