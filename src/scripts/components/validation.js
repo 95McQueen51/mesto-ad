@@ -73,7 +73,7 @@ function clearValidation(form, options) {
   let button = form.querySelector(options.submitButtonSelector);
   
   for (let i = 0; i < inputs.length; i++) {
-    let currentInput = inputs[I];
+    let currentInput = inputs[i];
 
     hideInputError(form, currentInput, options);
   }
