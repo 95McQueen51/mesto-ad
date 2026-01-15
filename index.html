@@ -161,7 +161,7 @@
       <div class="popup popup_type_info">
         <div class="popup__content">
           <button type="button" class="popup__close"></button>
-          <h3 class="popup__title">Статистика</h3>
+          <h3 class="popup__title">Статистика пользователей</h3>
           <div class="popup-info">
             <ul class="popup-info__list popup-info__list_type_definitions"></ul>
             <ul class="popup-info__list popup-info__list_type_users"></ul>
@@ -196,18 +196,9 @@
     </template>
 
     <template id="popup-info-user-preview-template">
-      <li class="popup-info__item popup-info__item_type_user">
-        <div class="popup-info__user">
-          <img class="popup-info__avatar" src="" alt="" />
-          <div class="popup-info__user-info">
-            <h4 class="popup-info__name"></h4>
-            <p class="popup-info__description"></p>
-          </div>
-        </div>
-        <div class="popup-info__user-stats">
-          <p class="popup-info__text">Всего карточек: <span class="popup-info__count"></span></p>
-          <p class="popup-info__text">Лайков: <span class="popup-info__count"></span></p>
-        </div>
+      <li class="popup-info__user-item">
+        <p class="popup-info__user-name"></p>
+        <span class="popup-info__user-cards-count"></span>
       </li>
     </template>
   </body>
