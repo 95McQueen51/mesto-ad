@@ -21,11 +21,14 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <div class="profile__image"></div>
+          <div
+            class="profile__image"
+            style="background-image: url('./src/images/avatar.jpg')"
+          ></div>
           <div class="profile__info">
-            <h1 class="profile__title"></h1>
+            <h1 class="profile__title">Жак-Ив Кусто</h1>
             <button class="profile__edit-button" type="button"></button>
-            <p class="profile__description"></p>
+            <p class="profile__description">Исследователь океана</p>
           </div>
           <button class="profile__add-button" type="button"></button>
         </section>
@@ -157,21 +160,8 @@
           </form>
         </div>
       </div>
-
-      <div class="popup popup_type_info">
-        <div class="popup__content">
-          <button type="button" class="popup__close"></button>
-          <h3 class="popup__title">Статистика пользователей</h3>
-          <div class="popup-info">
-            <ul class="popup-info__list popup-info__list_type_definitions"></ul>
-            <ul class="popup-info__list popup-info__list_type_users"></ul>
-          </div>
-        </div>
-      </div>
     </div>
-
     <script src="./src/scripts/index.js" defer type="module"></script>
-    
     <template id="card-template">
       <li class="places__item card">
         <img class="card__image" src="" alt="" />
@@ -182,23 +172,8 @@
           <h2 class="card__title"></h2>
           <div class="card__likes">
             <button type="button" class="card__like-button"></button>
-            <span class="card__like-count">0</span>
           </div>
         </div>
-      </li>
-    </template>
-
-    <template id="popup-info-definition-template">
-      <li class="popup-info__item">
-        <p class="popup-info__text popup-info__text_type_term"></p>
-        <p class="popup-info__text popup-info__text_type_definition"></p>
-      </li>
-    </template>
-
-    <template id="popup-info-user-preview-template">
-      <li class="popup-info__user-item">
-        <p class="popup-info__user-name"></p>
-        <span class="popup-info__user-cards-count"></span>
       </li>
     </template>
   </body>
